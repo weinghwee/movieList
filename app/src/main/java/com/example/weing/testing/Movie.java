@@ -7,16 +7,16 @@ package com.example.weing.testing;
 public class Movie {
     String title;
     String description;
+    int thumbnail;
 
-    Movie(){
-        title=description=null;
+    Movie() {
+        title = description = null;
     }
-    Movie(String title,String description ){
-        this.title=title;
-        this.description=description;
-    }
-    public String toString(){
-        String details="Title: "+title+"\n\nSummary: "+description+"\n";
-        return details ;
+
+    Movie(String title, String description, int thumbnail) {
+        this.title = title;
+        this.description = description;
+        this.thumbnail = thumbnail;
     }
 }
+

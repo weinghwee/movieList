@@ -3,6 +3,8 @@ package com.example.weing.testing;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,69 +27,74 @@ public class Testing extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<Movie> list=new ArrayList<>();
-        list.add(new Movie("Top Gun","sajdhksjahdkjashdjkahs"));
-        list.add(new Movie("Extinction","asdkjasgdkjashd"));
-        list.add(new Movie("Vacation","asdkjasgdkjashd"));
-        list.add(new Movie("Hitman's BodyGuard","asdkjasgdkjashd"));
-        list.add(new Movie("Matrix","asdkjasgdkjashd"));
-        list.add(new Movie("Blade Runner","asdkjasdfsdsgdkjashd"));
+        list.add(new Movie("Blade Runner","BBBBBBBBBBBBBB",R.drawable.blade_runner));
+        list.add(new Movie("Extinction","EEEEEEEEEEEEE",R.drawable.extinction));
+        list.add(new Movie("Vacation","VVVVVVVVVVV",R.drawable.vacation));
+        list.add(new Movie("Top Gun","TTTTTTTTTTT",R.drawable.top_gun));
+        list.add(new Movie("Hitman,s BodyGuard","HHHHHHHHHHHHHH",R.drawable.hitman));
+        list.add(new Movie("Matrix","MMMMMMMMMMM",R.drawable.matrix));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
-        createButton(list);
+        RecyclerView myrv=(RecyclerView)findViewById(R.id.movieList);
+        RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this,list);
+        myrv.setLayoutManager(new GridLayoutManager(this, 2));
+        myrv.setAdapter(myAdapter);
+
         }
 
     /** Called when the user taps the Send button */
-    public void createButton(final ArrayList<Movie> list) {
-        parent = (LinearLayout) findViewById(R.id.parentLayout);
-        for (int i = 0; i < list.size(); i++) {
-            String tempMovieTitle=chooseMoviePoster(list.get(i));
-            int id = getResources().getIdentifier(tempMovieTitle, "drawable", getPackageName());
-//            tempMovieDetails = list.get(i).toString();
-            newMovieImageButton = new ImageButton(Testing.this);
-            newMovieImageButton.setImageResource(id);
-            newMovieImageButton.setId(i + 1);
-            newMovieImageButton.setTag(list.get(i).title);
-            newMovieImageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String a=(String)view.getTag();
-                    tempMovieDetails=chooseDesription(a,list);
-                    Intent intent = new Intent(Testing.this, DisplayDetails.class);
-                    intent.putExtra(detailsOfMovie, tempMovieDetails);
-                    startActivity(intent);
-                }
-            });
-
-            parent.addView(newMovieImageButton);
-
-        }
-    }
-
-    public String chooseMoviePoster(Movie newMovie){
-        if(newMovie.title.equals("Blade Runner"))
-            return "blade_runner";
-        else if(newMovie.title.equals("Matrix"))
-            return "matrix";
-        else if(newMovie.title.equals("Extinction"))
-            return "extinction";
-        else if(newMovie.title.equals("Hitman's BodyGuard"))
-            return "hitman";
-        else if(newMovie.title.equals("Vacation"))
-            return "vacation";
-        else if(newMovie.title.equals("Top Gun"))
-            return "top_gun";
-        else return null;
-    }
-
-    public String chooseDesription(String a, ArrayList<Movie> list){
-        for(int i=0;i<list.size();i++){
-            if(a.equals(list.get(i).title))
-                return list.get(i).toString();
-
-
-        }
-        return null;
-    }
+//    public void createButton(final ArrayList<Movie> list) {
+//        parent = (LinearLayout) findViewById(R.id.parentLayout);
+//        for (int i = 0; i < list.size(); i++) {
+//            String tempMovieTitle=chooseMoviePoster(list.get(i));
+//            int id = getResources().getIdentifier(tempMovieTitle, "drawable", getPackageName());
+////            tempMovieDetails = list.get(i).toString();
+//            newMovieImageButton = new ImageButton(Testing.this);
+//            newMovieImageButton.setImageResource(id);
+//            newMovieImageButton.setId(i + 1);
+//            newMovieImageButton.setTag(list.get(i).title);
+//            newMovieImageButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    String a=(String)view.getTag();
+//                    tempMovieDetails=chooseDesription(a,list);
+//                    Intent intent = new Intent(Testing.this, DisplayDetails.class);
+//                    intent.putExtra(detailsOfMovie, tempMovieDetails);
+//                    startActivity(intent);
+//                }
+//            });
+//
+//            parent.addView(newMovieImageButton);
+//
+//        }
+//    }
+//
+//    public String chooseMoviePoster(Movie newMovie){
+//        if(newMovie.title.equals("Blade Runner"))
+//            return "blade_runner";
+//        else if(newMovie.title.equals("Matrix"))
+//            return "matrix";
+//        else if(newMovie.title.equals("Extinction"))
+//            return "extinction";
+//        else if(newMovie.title.equals("Hitman's BodyGuard"))
+//            return "hitman";
+//        else if(newMovie.title.equals("Vacation"))
+//            return "vacation";
+//        else if(newMovie.title.equals("Top Gun"))
+//            return "top_gun";
+//        else return null;
+//    }
+//
+//    public String chooseDesription(String a, ArrayList<Movie> list){
+//        for(int i=0;i<list.size();i++){
+//            if(a.equals(list.get(i).title))
+//                return list.get(i).toString();
+//
+//
+//        }
+//        return null;
+//    }
 
 
 }
