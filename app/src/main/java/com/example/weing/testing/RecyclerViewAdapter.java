@@ -10,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.List;
 
 /**
@@ -40,11 +47,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.movieThumbnail.setImageResource(myMovieList.get(i).thumbnail);
         holder.moviePoster.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(myContext, DisplayDetails.class);
-                intent.putExtra("Movie Title", myMovieList.get(i).title);
-                intent.putExtra("Description", myMovieList.get(i).description);
-                intent.putExtra("moviethumbnail", myMovieList.get(i).thumbnail);
-                myContext.startActivity(intent);
+                final RequestQueue queue= Volley.newRequestQueue(myContext);
+                String url ="http://www.google.com";
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Intent intent = new Intent(myContext, DisplayDetails.class);
+                                intent.putExtra("Movie Title", myMovieList.get(i).title);
+                                intent.putExtra("Description", response);
+                                intent.putExtra("moviethumbnail", myMovieList.get(i).thumbnail);
+                                myContext.startActivity(intent);
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Intent intent = new Intent(myContext, DisplayDetails.class);
+                        intent.putExtra("Movie Title", myMovieList.get(i).title);
+                        intent.putExtra("Description", "Error");
+                        intent.putExtra("moviethumbnail", myMovieList.get(i).thumbnail);
+                        myContext.startActivity(intent);
+                    }
+                });
+                queue.add(stringRequest);
+
             }
         });
     }
