@@ -48,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.moviePoster.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final RequestQueue queue= Volley.newRequestQueue(myContext);
-                String url ="http://www.google.com";
+                String url ="https://api.myjson.com/bins/j5f6b";
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override

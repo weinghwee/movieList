@@ -13,7 +13,7 @@ public class Movie {
         title = description = null;
     }
 
-    Movie(String title, String description, int thumbnail) {
+    Movie(String title,String description, int thumbnail) {
         this.title = title;
         this.description = description;
         this.thumbnail = thumbnail;

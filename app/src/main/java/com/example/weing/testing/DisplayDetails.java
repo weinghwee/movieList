@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class DisplayDetails extends AppCompatActivity {
     private TextView movietitle, moviedescription;
     private ImageView img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
