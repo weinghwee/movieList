@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -40,20 +41,11 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Testing extends AppCompatActivity {
-    ArrayList<Movie> list=new ArrayList<>();
-//    public static ArrayList<Movie> list=new ArrayList<>();
-    String tmp;
+     ArrayList<Movie> list=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-//        ArrayList<String> a=openConnection();
-//
-//        String x=a.size()+"";
-//        Log.d(tmp,x);
-//        getData data=new getData();
-//        data.execute();
+        openConnection();
 //        list.add(new Movie("Blade Runner","BBBBBBBBBBBBBB",R.drawable.blade_runner));
 //        list.add(new Movie("Extinction","EEEEEEEEEEEEE",R.drawable.extinction));
 //        list.add(new Movie("Vacation","VVVVVVVVVVV",R.drawable.vacation));
@@ -67,41 +59,36 @@ public class Testing extends AppCompatActivity {
         RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this,list);
         myrv.setLayoutManager(new GridLayoutManager(this, 2));
         myrv.setAdapter(myAdapter);
-        openConnection();
+
 
 
         }
-        public void openConnection(){
-            RequestQueue queue = Volley.newRequestQueue(this);
-            String url ="https://api.myjson.com/bins/j5f6b";
 
-// Request a string response from the provided URL.
+        public void openConnection(){
+            final RequestQueue queue= Volley.newRequestQueue(this);
+            String url ="https://api.themoviedb.org/3/movie/popular?api_key=a87b09af86c6db30567f6555a7473901";
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
-                                JSONArray tempList=new JSONArray(response);
-                                for(int i=0;i<tempList.length();i++){
-                                    JSONObject movie=(JSONObject)tempList.get(i);
-                                    Movie m=new Movie(movie.get("name")+"",movie.get("password")+"",R.drawable.matrix);
-                                    list.add(m);
-
+                                JSONObject jsonObject=new JSONObject(response);
+                                JSONArray array = jsonObject.getJSONArray("results");
+                                for(int i=0;i<array.length();i++){
+                                    list.add(new Movie(array.getJSONObject(i).getString("title"),array.getJSONObject(i).getString("overview"),R.drawable.blade_runner));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("Error!");
+
                 }
             });
-
-// Add the request to the RequestQueue.
             queue.add(stringRequest);
-
         }
 
 

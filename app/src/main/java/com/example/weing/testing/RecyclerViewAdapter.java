@@ -47,34 +47,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.movieThumbnail.setImageResource(myMovieList.get(i).thumbnail);
         holder.moviePoster.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                final RequestQueue queue= Volley.newRequestQueue(myContext);
-                String url ="https://api.myjson.com/bins/j5f6b";
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
+
                                 Intent intent = new Intent(myContext, DisplayDetails.class);
                                 intent.putExtra("Movie Title", myMovieList.get(i).title);
-                                intent.putExtra("Description", response);
+                                intent.putExtra("Description", myMovieList.get(i).description);
                                 intent.putExtra("moviethumbnail", myMovieList.get(i).thumbnail);
                                 myContext.startActivity(intent);
 
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Intent intent = new Intent(myContext, DisplayDetails.class);
-                        intent.putExtra("Movie Title", myMovieList.get(i).title);
-                        intent.putExtra("Description", "Error");
-                        intent.putExtra("moviethumbnail", myMovieList.get(i).thumbnail);
-                        myContext.startActivity(intent);
+
                     }
                 });
-                queue.add(stringRequest);
+
 
             }
-        });
-    }
+
+
 
     @Override
     public int getItemCount() {
